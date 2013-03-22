@@ -43,10 +43,7 @@ class ns741:
                      0x0E, 0x08, 0x3F, 0x2A,
                      0x0C, 0xE6, 0x3F, 0x70,
                      0x0A, 0xE4, 0x00, 0x42,
-                     0xC0, 0x41, 0xF4]
-                     
-        #iterator for register
-        iter_reg = 0
+
         #first resetting the modul
         self.reset()
         
