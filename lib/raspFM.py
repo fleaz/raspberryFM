@@ -150,7 +150,9 @@ class ns741:
         
         #FIXME:
         #write p2, see table in the datasheet "P2 vs. frequency"
-        self.i2c_write(0x07,  [self._p2])
+        #self.i2c_write(0x07,  [self._p2])
+        self.i2c_write(0x07,  [0x7E])
+        self.i2c_write(0x07,  [0x0E])
         
         sleep(1)
         #FIXME: here is still the part missing witch setzts MAA Register 
