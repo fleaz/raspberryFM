@@ -1,6 +1,10 @@
 #! /usr/env/python
 
 import lib.raspFM
+import smbus
 
-fm1 = raspFM(0x66,102000)
+bus = smbus.SMBus(0)
+fm = raspFM.ns741(bus,0x66,102000)
 
+fm.init_module()
+fm.set_power_state(2)
