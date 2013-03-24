@@ -6,6 +6,7 @@ OSCILLATOR_BIT = 0x02
 MUTE_BIT = 0x01
 RF_POWER_BIT_0 = 0x40
 RF_POWER_BIT_1 = 0x80
+ALC_AUTO = 0x01
 MAA_SET = {1:7, 2:6, 3:5, 4:4, 5:4, 6:3, 7:3, 8:2, 9:2, 10:1, 11:1, 12:1, 13:1, 14:0}
 
 class ns741:
