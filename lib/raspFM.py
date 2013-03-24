@@ -63,6 +63,10 @@ class ns741:
 
         #set freqency
         self.set_frequency(self._frequency_kHz)
+        
+        #i do not know why, but we have to write there to start transmitting.... not dokumentaed?! WTF?
+        self.i2c_write(0x10,  [0x20])
+        
         #FIXME: start rds transmit
 
     def reset(self):
