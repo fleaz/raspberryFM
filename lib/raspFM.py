@@ -43,23 +43,25 @@ class ns741:
                      0x0E, 0x08, 0x3F, 0x2A,
                      0x0C, 0xE6, 0x3F, 0x70,
                      0x0A, 0xE4, 0x00, 0x42,
+                     0xC0, 0x41, 0xF4]
+
 
         #first resetting the modul
         self.reset()
-        
+
         #writeing init data
         self.i2c_write(0x00, init_data)       
 
         #wait 700ms for stabilize the crystal oscillation
         sleep(0.7)
-        #FIXME: switch power on(PE to ON)
-        
+        #switch power on(PE to ON)
+        self.set_power_state(True)        
         #wait 150ms 
         sleep(0.15)
         #FIXME: Set ALC to ON
-        
-        #FIXME: set freqency
-        
+
+        #set freqency
+        self.set_frequency(self._frequency_kHz)
         #FIXME: start rds transmit
 
     def reset(self):
@@ -79,6 +81,19 @@ class ns741:
             self.i2c_write(0x00, [register_00 & ~TX_BIT])
         else:
             print ("it already had the suggested power state" + " " + str(register_00) )
+
+    def set_ALC_state(self,  state):
+        #this method is used for switching Auto Level Control auto state of the module
+
+        #get state of register 00 where power bit is
+        register_0D = self.i2c_read_register(0x0D)
+
+        if (state == True) and (register_0D & ALC_AUTO == 0) :
+            self.i2c_write(0x00, [register_0D | ALC_AUTO])
+        elif(state == False) and (register_0D & ALC_AUTO != 0) :
+            self.i2c_write(0x00, [register_0D & ~ALC_AUTO])
+        else:
+            print ("it already had the ALC auto state" + " " + str(register_0D) )
 
     def set_oscillator_state(self,  state):
         #this method is used for switching oscillator state of the module
@@ -136,7 +151,7 @@ class ns741:
         #write p2, see table in the datasheet "P2 vs. frequency"
         self.i2c_write(0x07,  [self._p2])
         
-        sleep(0.9)
+        sleep(1)
         #FIXME: here is still the part missing witch setzts MAA Register 
         #print(self.i2c_read_register(0x70))
         #print(R_CEX)
@@ -167,7 +182,7 @@ class ns741:
         else:
             raise TunerError('No valid Option')
         self.i2c_write(0x02, [register_02])
-        
+
     def set_mode(self, transmitmode):
         pass
 
